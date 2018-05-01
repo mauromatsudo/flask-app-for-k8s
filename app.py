@@ -5,7 +5,7 @@ from forms import ContactForm
 # Flask
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'my secret'
-app.config['DEBUG'] = True
+app.config['DEBUG'] = False
 
 # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.sqlite'
@@ -108,4 +108,4 @@ def contacts_delete():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0")
