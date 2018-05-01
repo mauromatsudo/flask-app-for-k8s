@@ -1,6 +1,6 @@
 # Flask contacts
 
-[DEMO](http://flask-contacts.programadorwebvalencia.com)
+[DEMO](https://flaskcontacts.herokuapp.com/)
 
 ![alls](https://github.com/tanrax/flask-contacts/raw/master/screenshots/alls.jpg)
 
