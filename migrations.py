@@ -17,4 +17,5 @@ for num in range(100):
     # Save in database
     mi_contacto = Contact(name=name, surname=surname, email=email, phone=phone)
     db.session.add(mi_contacto)
-    db.session.commit()
+
+db.session.commit()
