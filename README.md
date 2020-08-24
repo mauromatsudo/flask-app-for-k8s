@@ -30,3 +30,7 @@ python3 app.py
 ![message](https://github.com/tanrax/flask-contacts/raw/master/screenshots/message.jpg)
 ![new](https://github.com/tanrax/flask-contacts/raw/master/screenshots/new.jpg)
 ![search](https://github.com/tanrax/flask-contacts/raw/master/screenshots/search.jpg)
+
+## Forks with extensions
+
+- ![Ability to attach a CSV file](https://github.com/areeburrub/flask-contacts)
