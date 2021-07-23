@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, render_template, request, flash
 from models import db, Contact
 from forms import ContactForm
+import os
 
 # Flask
 app = Flask(__name__)
@@ -8,8 +9,14 @@ app.config['SECRET_KEY'] = 'my secret'
 app.config['DEBUG'] = False
 
 # Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.sqlite'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/book'
+db_user_password = os.getenv('db_user_password')
+db_username = 'root'
+db_name = 'book'
+MYSQL_SERVICE_HOST = os.getenv("MYSQL_SERVICE_HOST")
+MYSQL_DATABASE_PORT = os.getenv("MYSQL_DATABASE_PORT")
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.sqlite'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/book'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://{db_username}:{db_user_password}@{MYSQL_SERVICE_HOST}:{MYSQL_DATABASE_PORT}/{db_name}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
