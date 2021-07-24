@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: flask-contacts-mysql
+  labels:
+    db: flask-contacts-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      db: flask-contacts-mysql
+  template:
+    metadata:
+      labels:
+        db: flask-contacts-mysql
+  spec:
+    containers:
+    - name: flask-contacts-mysql
+      image: mysql
+      imagePullPolicy: IfNotPresent
+      env:
+      - name: MYSQL_ROOT_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: flask-contacts-secret
+            key: db_root_password
+      ports:
+      - containerPort: 3306
+        name: db-container
+      volumeMounts:
+      - name:  flask-contacts-db-storage
+        mounPath: /var/lib/mysql
+      readinessProbe:
+        tcpSocker:
+          port: 3306
+        initialDelaySeconds: 20
+        periodSeconds: 3 #frequency to execute the readinessprobe if it initially fails
+    volumes:
+    - name: flask-contacts-db-storage
+      persistentVolumenClaim:
+        claimName: flask-contacts-db-pvc
