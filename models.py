@@ -1,16 +1,18 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import os
+from os import getenv, environ
 
-db_user_password = os.getenv('db_user_password')
-db_username = 'root'
-db_name = 'book'
-MYSQL_SERVICE_HOST = os.getenv("MYSQL_SERVICE_HOST")
-MYSQL_DATABASE_PORT = os.getenv("MYSQL_DATABASE_PORT")
+def set_string():
+    db_user_password = getenv('db_user_password')
+    db_username = 'root'
+    MYSQL_SERVICE_HOST = getenv("MYSQL_SERVICE_HOST")
+    MYSQL_DATABASE_PORT = getenv("MYSQL_DATABASE_PORT")
+    return f'mysql+pymysql://{db_username}:{db_user_password}@{MYSQL_SERVICE_HOST}:{MYSQL_DATABASE_PORT}'
+
+db_name = getenv('db_name')
+connect_string = set_string()
 app = Flask(__name__)
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.sqlite'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/book'
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://{db_username}:{db_user_password}@{MYSQL_SERVICE_HOST}:{MYSQL_DATABASE_PORT}/{db_name}'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'{connect_string}/{db_name}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
