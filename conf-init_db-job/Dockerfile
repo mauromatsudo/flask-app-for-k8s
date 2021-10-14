@@ -17,16 +17,11 @@ FROM python:3.7-alpine
 WORKDIR /app
 
 RUN apk add --no-cache libcrypto1.1 libssl1.1
+ENV PATH="/app/.venv/bin:$PATH"
 
 COPY --from=builder /app /app
 COPY . .
 
-ENV PATH="/app/.venv/bin:$PATH"
-
-ENV MYSQL_DATABASE_PORT=3306
-ENV db_user_password=password
-ENV MYSQL_SERVICE_HOST=192.168.111.14
-ENV db_name=book
 EXPOSE 5000
 CMD [ "python", "conf_init_db.py" ]
 
