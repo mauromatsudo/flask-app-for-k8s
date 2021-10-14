@@ -1,7 +1,7 @@
 Flask==1.0
 Flask-SQLAlchemy==2.5
 Flask-WTF==0.14.2
-Werkzeug==0.16
+#Werkzeug==0.16
 email_validator
-python-dotenv
+#python-dotenv
 pymysql
