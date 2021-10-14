@@ -11,12 +11,13 @@ def set_string():
     db_username = 'root'
     MYSQL_SERVICE_HOST = getenv("MYSQL_SERVICE_HOST")
     MYSQL_DATABASE_PORT = getenv("MYSQL_DATABASE_PORT")
-    return f'mysql+pymysql://{db_username}:{db_user_password}@{MYSQL_SERVICE_HOST}:{MYSQL_DATABASE_PORT}'
+    db_name = getenv('db_name')
+    return f'mysql+pymysql://{db_username}:{db_user_password}@{MYSQL_SERVICE_HOST}:{MYSQL_DATABASE_PORT}/{db_name}'
 
-db_name = getenv('db_name')
+#db_name = getenv('db_name')
 connect_string = set_string()
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = f'{connect_string}/{db_name}'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'{connect_string}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 

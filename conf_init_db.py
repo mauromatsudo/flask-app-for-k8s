@@ -4,11 +4,11 @@ from sqlalchemy import create_engine
 from models import db, Contact, set_string
 from os import getenv
 
-connect_string = set_string()
 db_name = getenv('db_name')
+connect_string = set_string().replace(f'/{db_name}', '')
 engine = create_engine(connect_string)
 connection = engine.connect()
-connection.execute(f'CREATE DATABASE {db_name}')
+connection.execute(f'CREATE DATABASE IF NOT EXISTS {db_name}')
 
 fake = Factory.create()
 db.drop_all()

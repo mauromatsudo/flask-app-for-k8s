@@ -1,7 +1,8 @@
+#!/usr/bin/python3
 from flask import Flask, redirect, url_for, render_template, request, flash
-from models import db, Contact
+from models import db, Contact, set_string
 from forms import ContactForm
-import os
+#from conf_init_db import set_db
 
 # Flask
 app = Flask(__name__)
@@ -9,15 +10,14 @@ app.config['SECRET_KEY'] = 'my secret'
 app.config['DEBUG'] = False
 
 # Database
-db_user_password = os.getenv('db_user_password')
-db_username = 'root'
-db_name = 'book'
-MYSQL_SERVICE_HOST = os.getenv("MYSQL_SERVICE_HOST")
-MYSQL_DATABASE_PORT = os.getenv("MYSQL_DATABASE_PORT")
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.sqlite'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/book'
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://{db_username}:{db_user_password}@{MYSQL_SERVICE_HOST}:{MYSQL_DATABASE_PORT}/{db_name}'
+connect_string = set_string()
+#print(f'{connect_string}')
+app.config['SQLALCHEMY_DATABASE_URI'] = f'{connect_string}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.debug=True ###### tirar
+
+#set_db()
+
 db.init_app(app)
 
 
@@ -115,4 +115,5 @@ def contacts_delete():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    #app.run(host="0.0.0.0")
+    app.run()

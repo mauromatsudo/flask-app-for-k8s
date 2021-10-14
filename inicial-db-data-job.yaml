@@ -1,0 +1,11 @@
+apiVersion: batch/v1
+kind: Job
+metadata: 
+  name: set-inicial-db-data
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers: 
+      - name: set-inicial-db-data
+        image: set-inicial-db-data
