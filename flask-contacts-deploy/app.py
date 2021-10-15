@@ -11,7 +11,7 @@ app.config['DEBUG'] = False
 
 # Database
 connect_string = set_string()
-#print(f'{connect_string}')
+print(f'{connect_string}')
 app.config['SQLALCHEMY_DATABASE_URI'] = f'{connect_string}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.debug=True ###### tirar
