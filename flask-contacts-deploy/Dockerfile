@@ -1,4 +1,4 @@
-FROM debian:11-slim AS builder
+FROM ubuntu:20.04 AS builder
 
 WORKDIR /app
 
@@ -12,25 +12,30 @@ RUN .venv/bin/pip install --no-cache-dir -r requirements.txt \
     && find /app/.venv -type f -a -name '*.pyc' -o -name '*.pyo'\
     -exec rm -rf '{}' \+
 
-FROM debian:11-slim
+FROM ubuntu:20.04
 
-WORKDIR /app
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && apt install -y \
-    apache2 libapache2-mod-wsgi-py3 python3 \
+    apache2 libapache2-mod-wsgi-py3 \
     && apt-get clean \
     && apt-get autoremove \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    /var/log/dpkg.log \
+    /var/lib/dpkg/status \
+    /var/log/apt/history.log \
+    /var/cache \
+    /var/log/apt 
+
+WORKDIR /app
 
 COPY /flask-contacts.conf /etc/apache2/sites-available/flask-contacts.conf
 COPY --from=builder /app /app
 COPY . .
 
-RUN a2ensite flask-contacts
-RUN a2enmod headers
+RUN a2ensite flask-contacts && a2dissite 000-default.conf && a2enmod headers
 
 ENV PATH="/app/.venv/bin:$PATH"
 
 EXPOSE 80
 CMD /usr/sbin/apache2ctl -D FOREGROUND
-
