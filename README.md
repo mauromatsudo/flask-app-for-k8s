@@ -89,7 +89,7 @@ kubectl apply -f https://github.com/mauromatsudo/flask-app-for-k8s/blob/master/k
 ```
 kubectl apply -f https://raw.githubusercontent.com/mauromatsudo/flask-app-for-k8s/master/k8s/app/flask-contact-confmap.yaml
 ```
-8. conf-init-db ins a job which inserts some random data into MySQL ṕod:
+8. conf-init-db is a job which inserts some random data into MySQL ṕod. As well as the DB data are stored using a PersistentVolume, this job should run only once, when you are deploying your app for the first time.
 ```
 kubectl apply -f https://raw.githubusercontent.com/mauromatsudo/flask-app-for-k8s/master/k8s/app/conf-init-db.yaml
 ```
