@@ -89,13 +89,21 @@ kubectl apply -f https://github.com/mauromatsudo/flask-app-for-k8s/blob/master/k
 ```
 kubectl apply -f https://raw.githubusercontent.com/mauromatsudo/flask-app-for-k8s/master/k8s/app/flask-contact-confmap.yaml
 ```
-8. conf-init-db is a job which inserts some random data into MySQL ṕod. As well as the DB data are stored using a PersistentVolume, this job should run only once, when you are deploying your app for the first time.
+8. conf-init-db is a job which inserts some random data into MySQL ṕod. As well as the DB data are stored using a PersistentVolume, this job should run only once, when you are deploying your app for the first time: <br/>
+**You need to edit this yaml and replace the container image with your dockerhub repo address <br/>
+image: mauromatsudo/flask-contacts:flask-contacts-deploy**
 ```
-kubectl apply -f https://raw.githubusercontent.com/mauromatsudo/flask-app-for-k8s/master/k8s/app/conf-init-db.yaml
+wget https://raw.githubusercontent.com/mauromatsudo/flask-app-for-k8s/master/k8s/app/conf-init-db.yaml
+vi conf-init-db.yaml # replace the image with your repo
+kubectl apply -f conf-init-db.yaml
 ```
-9. Finally, we can deploy the app:
+9. Finally, we can deploy the app: <br/>
+**Once again, the repo for the contianer image have to replaced
+image: mauromatsudo/flask-contacts:flask-contacts-deploy**
 ```
-kubectl apply -f https://raw.githubusercontent.com/mauromatsudo/flask-app-for-k8s/master/k8s/app/flask-contact-deploy.yaml
+wget https://raw.githubusercontent.com/mauromatsudo/flask-app-for-k8s/master/k8s/app/flask-contact-deploy.yaml
+vi flask-contact-deploy.yaml # replace the image with your repo
+kubectl apply -f flask-contact-deploy.yaml
 ```
 10. To access/test the app:
 ```
