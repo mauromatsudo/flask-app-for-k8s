@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: flask-contacts-cm
-data:
-  MYSQL_DATABASE_PORT: 3306
-  db_name: 'book'
