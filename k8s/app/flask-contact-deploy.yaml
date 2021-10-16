@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-contact
+  namespace: flask-contacts
+spec:
+  type: NodePort
+  ports:
+  - targetPort: 80
+    port: 80
+    nodePort: 32000
+  selector:
+    app: flask-contact
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-contact
+  namespace: flask-contacts
+  labels:
+    app: flask-contact
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 10%
+  selector:
+    matchLabels:
+      app: flask-contact
+  template:
+    metadata:
+      labels:
+        app: flask-contact
+    spec:
+      serviceAccountName: flask-contacts-sa
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: flask-contact
+        imagePullPolicy: Always
+        image: mauromatsudo/flask-contacts:flask-contacts-deploy
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: flask-contact-confmap
+        - secretRef:
+            name: flask-contacts-sec
+        resources:
+          requests:
+            cpu: "10m"
+            memory: "10Mi"
+          limits:
+            cpu: "100m"
+            memory: "150Mi"
+#        securityContext:
+#          runAsNonRoot: true
+#          runAsUser: 33                it isn't working
+#          capabilities:
+#            add: 
+#            - CAP_NET_BIND_SERVICE

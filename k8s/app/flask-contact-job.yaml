@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: conf-init-db
+  namespace: flask-contacts
+  labels:
+    app: conf-init-db
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: flask-contacts-sa
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: conf-init-db
+        image: mauromatsudo/flask-contacts:conf-init-db-job
+        envFrom:
+        - configMapRef:
+            name: flask-contact-confmap
+        - secretRef:
+            name: flask-contacts-sec

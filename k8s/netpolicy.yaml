@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: np-db
+  namespace: flask-contacts 
+spec:
+  podSelector: 
+    matchLabels:
+      db: flask-contacts-mysql
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: flask-contacts
+      podSelector:
+        matchLabels:
+          app: flask-contact          
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: flask-contacts
+      podSelector:
+        matchLabels:
+          app: conf-init-db
+    ports:
+    - protocol: TCP
+      port: 3306
