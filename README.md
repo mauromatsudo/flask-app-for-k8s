@@ -98,7 +98,7 @@ vi conf-init-db.yaml # replace the image with your repo
 kubectl apply -f conf-init-db.yaml
 ```
 9. Finally, we can deploy the app: <br/>
-**Once again, the repo for the contianer image have to be modified*
+**Once again, the repo for the contianer image have to be modified**
 ```
 wget https://raw.githubusercontent.com/mauromatsudo/flask-app-for-k8s/master/k8s/app/flask-contact-deploy.yaml
 vi flask-contact-deploy.yaml # replace the image with your repo
