@@ -77,7 +77,7 @@ kubectl appy -f https://github.com/mauromatsudo/flask-app-for-k8s/blob/master/k8
 kubectl create secret docker-registry regcred --docker-server=hub.docker.com --docker-username=$dockerUser--docker-password=$dockerPassword --docker-email=$dockerEmail -n flask-contacts 
 ```
 
-5. The root password of MYQSL database should be securily stored using a secret.
+5. The MySQL root password should be securily stored using a secret.
 ```
 kubectl create secret generic flask-contacts-sec -n flask-contacts --from-literal=db_root_password=${CHOOSEAPASSWORD}
 ```
