@@ -35,13 +35,13 @@ You need a Kubernetes cluster with at least 1 Master + 1 Worker nodes. I persona
 
 For the next steps, you must have kubecetl installed and liked to your cluster
 
-1. First of all, create the namespace for the app and set the service account permissions:
+1. First of all, create the namespace for the app and set the service account permissions: 
 kubectl apply -f https://raw.githubusercontent.com/mauromatsudo/flask-app-for-k8s/master/k8s/access.yaml
 
-2. For security reasons, there is a NetworkPolicy who prevents access to your database pods:
+2. For security reasons, there is a NetworkPolicy who prevents access to your database pods: 
 kubectl apply -f https://raw.githubusercontent.com/mauromatsudo/flask-app-for-k8s/master/k8s/netpolicy.yaml
 
-3. Now is the annoying part. As we need a persistent volume to maintain the database. I decided to create a NFS volume beacause it could be shared among all the worker nodes, although it is not suitable for prodution environment and also takes some effort.
+3. Now is the annoying part. As we need a persistent volume to maintain the contacts data, I decided to create a NFS volume beacause it could be shared among all the worker nodes, although it is not suitable for prodution environment and also takes some effort.
 So lets install the NFS Server on the master node:
 sudo apt update && apt install -y nfs-server
 sudo mkdir /opt/flask_contact
