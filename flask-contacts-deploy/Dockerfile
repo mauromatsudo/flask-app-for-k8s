@@ -24,8 +24,8 @@ RUN apt update && apt install -y \
     /var/log/dpkg.log \
     /var/lib/dpkg/status \
     /var/log/apt/history.log \
-    /var/cache \
-    /var/log/apt 
+    /var/cache /var/log/apt \
+    && a2dissite 000-default.conf
 
 WORKDIR /app
 
@@ -33,9 +33,9 @@ COPY /flask-contacts.conf /etc/apache2/sites-available/flask-contacts.conf
 COPY --from=builder /app /app
 COPY . .
 
-RUN a2ensite flask-contacts && a2dissite 000-default.conf && a2enmod headers
+RUN a2ensite flask-contacts
 
 ENV PATH="/app/.venv/bin:$PATH"
 
-EXPOSE 80
+EXPOSE 8080
 CMD /usr/sbin/apache2ctl -D FOREGROUND
