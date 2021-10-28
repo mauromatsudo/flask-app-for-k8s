@@ -33,6 +33,10 @@ spec:
     metadata:
       labels:
         app: flask-contact
+    volumes:
+    - name: apache-port
+      configMap:
+        name: apache-port
     spec:
       serviceAccountName: flask-contacts-sa
       imagePullSecrets:
@@ -48,6 +52,9 @@ spec:
             name: flask-contact-confmap
         - secretRef:
             name: flask-contacts-sec
+        volumeMounts:
+        - name: apache-port
+          mountPath: /etc/apache2
         resources:
           requests:
             cpu: "10m"
