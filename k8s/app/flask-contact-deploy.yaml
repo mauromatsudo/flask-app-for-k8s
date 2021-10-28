@@ -54,7 +54,7 @@ spec:
             name: flask-contacts-sec
         volumeMounts:
         - name: apache-port
-          mountPath: /etc/apache2
+          mountPath: "/etc/apache2/"
         resources:
           requests:
             cpu: "10m"
