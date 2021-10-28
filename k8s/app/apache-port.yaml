@@ -1,1 +1,11 @@
-configmap/apache-port created
+apiVersion: v1
+data:
+  ports.conf: "# If you just change the port or add more ports here, you will likely
+    also\n# have to change the VirtualHost statement in\n# /etc/apache2/sites-enabled/000-default.conf\n\nListen
+    8080\n\n<IfModule ssl_module>\n\tListen 443\n</IfModule>\n\n<IfModule mod_gnutls.c>\n\tListen
+    443\n</IfModule>\n\n# vim: syntax=apache ts=4 sw=4 sts=4 sr noet\n"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: apache-port
+  namespace: flask-contacts
