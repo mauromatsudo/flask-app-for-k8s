@@ -33,14 +33,14 @@ spec:
     metadata:
       labels:
         app: flask-contact
-    volumes:
-    - name: apache-port
-      configMap:
-        name: apache-port
     spec:
       serviceAccountName: flask-contacts-sa
       imagePullSecrets:
       - name: regcred
+      volumes:
+      - name: apache-port
+        configMap:
+          name: apache-port
       containers:
       - name: flask-contact
         imagePullPolicy: Always
